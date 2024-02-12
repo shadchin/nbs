@@ -91,3 +91,4 @@ test-results
 .input
 .secrets
 .vars
+.vscode/sftp.json
