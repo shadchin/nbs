@@ -19,7 +19,7 @@ PEERDIR(
     cloud/filestore/tests/python/lib
 )
 
-SET(NFS_RESTART_INTERVAL 20)
+SET(NFS_RESTART_INTERVAL 5)
 
 INCLUDE(${ARCADIA_ROOT}/cloud/filestore/tests/recipes/service-kikimr.inc)
 
