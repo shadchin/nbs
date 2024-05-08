@@ -15,6 +15,7 @@
 #include <cloud/blockstore/libs/diagnostics/server_stats.h>
 #include <cloud/blockstore/libs/diagnostics/volume_stats.h>
 #include <cloud/blockstore/libs/nbd/device.h>
+#include <cloud/blockstore/libs/nbd/netlink_device.h>
 #include <cloud/blockstore/libs/nbd/server.h>
 #include <cloud/blockstore/libs/nbd/server_handler.h>
 #include <cloud/blockstore/libs/service/context.h>
@@ -292,12 +293,22 @@ void TBootstrap::Start()
 
     if (Options->ConnectDevice) {
 #if defined(_linux_)
-        NbdDevice = CreateDeviceConnection(
-            Logging,
-            listenAddress,
-            Options->ConnectDevice,
-            Options->Timeout);
-
+        if (Options->Netlink) {
+            NbdDevice = CreateNetlinkDevice(
+                Logging,
+                listenAddress,
+                Options->ConnectDevice,
+                Options->Timeout,
+                Options->DeadConnectionTimeout,
+                Options->Reconfigure,
+                Options->Disconnect);
+        } else {
+            NbdDevice = CreateDevice(
+                Logging,
+                listenAddress,
+                Options->ConnectDevice,
+                Options->Timeout);
+        }
         NbdDevice->Start();
 #else
         ythrow yexception() << "unsupported platform";

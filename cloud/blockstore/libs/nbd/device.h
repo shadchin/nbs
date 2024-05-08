@@ -13,33 +13,33 @@ namespace NCloud::NBlockStore::NBD {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-struct IDeviceConnection
+struct IDevice
     : public IStartable
 {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
-struct IDeviceConnectionFactory
+struct IDeviceFactory
 {
-    virtual ~IDeviceConnectionFactory() = default;
+    virtual ~IDeviceFactory() = default;
 
-    virtual IDeviceConnectionPtr Create(
+    virtual IDevicePtr Create(
         TNetworkAddress connectAddress,
         TString deviceName) = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
-IDeviceConnectionPtr CreateDeviceConnection(
+IDevicePtr CreateDevice(
     ILoggingServicePtr logging,
     TNetworkAddress connectAddress,
     TString deviceName,
     TDuration timeout);
 
-IDeviceConnectionPtr CreateDeviceConnectionStub();
+IDevicePtr CreateDeviceStub();
 
-IDeviceConnectionFactoryPtr CreateDeviceConnectionFactory(
+IDeviceFactoryPtr CreateDeviceFactory(
     ILoggingServicePtr logging,
     TDuration timeout);
 
