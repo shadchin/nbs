@@ -15,6 +15,10 @@ SRCS(
 IF (OS_LINUX)
     SRCS(
         device.cpp
+    )
+
+IF (NETLINK)
+    SRCS(
         netlink_device.cpp
     )
     CFLAGS(

@@ -509,18 +509,21 @@ void TBootstrapBase::Init()
         .NbdDevicePrefix = Configs->ServerConfig->GetNbdDevicePrefix(),
     };
 
-    NBD::IDeviceFactoryPtr nbdDeviceFactory;
+    NBD::IDeviceFactoryPtr nbdDeviceFactory = NBD::CreateDeviceFactory(
+        Logging,
+        TDuration::Days(1));    // timeout
+
     if (Configs->ServerConfig->GetNbdNetlink()) {
+#ifdef NETLINK
         nbdDeviceFactory = NBD::CreateNetlinkDeviceFactory(
             Logging,
-            TDuration::Days(1),     // timeout
-            TDuration::Days(1),     // deadConnectionTimeout
-            true,                   // reconfigure
-            false);                 // disconnect
-    } else {
-        nbdDeviceFactory = NBD::CreateDeviceFactory(
-            Logging,
-            TDuration::Days(1));    // timeout
+            TDuration::Days(1), // timeout
+            TDuration::Days(1), // deadConnectionTimeout
+            true,               // reconfigure
+            false);             // disconnect
+#else
+        STORAGE_ERROR("built without netlink support, falling back to ioctl");
+#endif
     }
 
     EndpointManager = CreateEndpointManager(
