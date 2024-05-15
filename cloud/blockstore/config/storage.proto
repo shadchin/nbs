@@ -970,4 +970,8 @@ message TStorageServiceConfig
     optional bool DataScrubbingEnabled = 364;
     // Interval between scrubbing ranges in milliseconds
     optional uint32 ScrubbingInterval = 365;
+
+    // Used inside TWaitDependentDisksToSwitchNodeActor to schedule retries.
+    // Set in ms.
+    optional uint32 WaitDependentDisksRetryRequestDelay = 366;
 }

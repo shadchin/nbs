@@ -1,3 +1,3 @@
 SysLog: false
-DefaultLevel: 3
+DefaultLevel: 6
 

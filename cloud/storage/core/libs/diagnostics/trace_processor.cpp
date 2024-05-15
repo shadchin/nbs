@@ -54,7 +54,7 @@ template <typename TResult>
 requires std::is_default_constructible_v<TResult>
 TResult GetIdParam(const NLWTrace::TTrackLog::TItem& ringItem)
 {
-    if (auto* diskId = FindParam(ringItem, NProbeParam::DiskId); diskId) {
+    if (auto* diskId = FindParam(ringItem, NProbeParam::AgentId); diskId) {
         return diskId->Get<TResult>();
     } else if (auto* fsId = FindParam(ringItem, NProbeParam::FsId); fsId) {
         return fsId->Get<TResult>();
@@ -67,7 +67,7 @@ template <typename TResult>
 requires std::is_default_constructible_v<TResult>
 TResult GetIdParam(const TCgiParameters& cgiParams)
 {
-    if (auto diskId = cgiParams.Get(NProbeParam::DiskId); !diskId.empty()) {
+    if (auto diskId = cgiParams.Get(NProbeParam::AgentId); !diskId.empty()) {
         return diskId;
     } else if (auto fsId = cgiParams.Get(NProbeParam::FsId); !fsId.empty()) {
         return fsId;
