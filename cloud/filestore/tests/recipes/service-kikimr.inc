@@ -15,6 +15,7 @@ SET(RECIPE_ARGS
     --use-log-files
     --in-memory-pdisks
     --restart-interval $NFS_RESTART_INTERVAL
+    --verbose
 )
 
 IF (NFS_STORAGE_CONFIG_PATCH)
